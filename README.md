@@ -151,9 +151,26 @@ We have provided test data for all the resources.
 ## Interview Questions
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
+## Interview Questions
 
-1. The core features of Node.js and Express and why they are useful.
-1. Understand and explain the use of Middleware.
-1. The basic principles of the REST architectural style.
-1. Understand and explain the use of Express Routers.
-1. Describe tooling used to manually test the correctness of an API.
+Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
+
+* The core features of Node.js and Express and why they are useful.
+
+> uses JS for both client and server. JS is asynchronous. 
+
+* Understand and explain the use of Middleware.
+
+> executes on calls to provide services such as user auth, etc.
+
+* The basic principles of the REST architectural style.
+
+> REST (REpresentational State Transfer) separates concerns of client and server. Facilitates stateless communication (each interaction is independent).
+
+* Understand and explain the use of Express Routers.
+
+> executes code based on specific URL routes, HTTP verbs, and URL parameters. Handy.
+
+* Describe tooling used to manually test the correctness of an API.
+
+> Postman can generate API calls to verify functionality & correctness.
