@@ -76,7 +76,30 @@ router.post('/', (req, res) => {
 })
 
 //* PUT update project
-
+router.put('/:id', async (req, res) => {
+    const possibleProject = await Projects.get(req.params.id)
+    if (!possibleProject) {
+        res.status(404).json({
+            message: 'There is no project with that ID.'
+        })
+    } else {
+        if (!req.body.name || !req.body.description) {
+            res.status(400).json({
+                message: 'Please provide a name and description of the project.'
+            })
+        } else {
+            try {
+                const updatedProject = await Projects.update(req.params.id, req.body);
+                res.status(200).json(updatedProject);
+            } catch (err) {
+                res.status(500).json({
+                    message: 'The project information could not be modified.',
+                    err: err.message
+                })
+            }
+        }
+    }
+})
 
 //* DELETE project
 router.delete('/:id', async (req, res) => {
