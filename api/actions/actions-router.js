@@ -43,6 +43,26 @@ router.get('/:id', (req, res) => {
 
 
 //* DELETE action
+router.delete('/:id', async (req, res) => {
+    const possibleAction = await Actions.get(req.params.id)
+    if (!possibleAction) {
+        res.status(404).json({
+            message: "There is no action with that ID."
+        })
+    } else {
+        try {
+            await Actions.remove(possibleAction.id)
+            // console.log(deletedAction);
+            res.status(200).json(`Action ${possibleAction.id} removed.`)
+        }
+        catch (err) {
+            res.status(500).json({
+                message: "The action could not be removed.",
+                err: err.message
+            })
+        }
+    } 
+})
   
 // do not forget to export the router
 module.exports = router;
