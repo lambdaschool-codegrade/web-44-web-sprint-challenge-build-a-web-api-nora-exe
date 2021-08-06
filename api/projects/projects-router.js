@@ -19,15 +19,32 @@ router.get('/', (req, res) => {
         })
 })
 
+//* GET project - return project as response body
+router.get('/:id', (req, res) => {
+    Projects.get(req.params.id)
+        .then(project => {
+           if (!project) {
+                res.status(404).json({
+                    message: "There is no project with that ID.",
+                })
+           } res.json(project)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "The project information could not be retrieved.",
+                err: err.message
+            })
+        })
+})
 
 // handle errors
-router.use((err, req, res) => {
-    res.status(err.status || 500).json({
-      customMessage: 'Wow, you found an error! Neat!',
-      message: err.message,
-      stack: err.stack
-    })
-  })
+// router.use((err, req, res) => {
+//     res.status(err.status || 500).json({
+//       customMessage: 'Wow, you found an error! Neat!',
+//       message: err.message,
+//       stack: err.stack
+//     })
+//   })
   
   // do not forget to export the router
   module.exports = router;
