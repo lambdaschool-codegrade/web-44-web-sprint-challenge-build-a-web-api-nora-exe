@@ -37,6 +37,35 @@ router.get('/:id', (req, res) => {
         })
 })
 
+//* GET array of actions
+router.get('/:id/actions', (req, res) => {
+    Projects.getProjectActions(req.params.id)
+        .then(actions => {
+            if (!actions) {
+                res.status(404).json({
+                    message: "There are no actions associated with that project ID."
+                })
+            } res.json(actions)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "The action information could not be retrieved.",
+                err: err.message
+            })
+        })
+})
+
+//* POST new project - return new project
+
+
+//* PUT update project
+
+
+//* DELETE project
+
+
+
+
 // handle errors
 // router.use((err, req, res) => {
 //     res.status(err.status || 500).json({
