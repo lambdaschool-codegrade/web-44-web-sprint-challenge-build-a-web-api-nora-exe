@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Actions = require('./actions-model');
+const Projects = require('../projects/projects-model');
 
 // endpoints
 //* GET action(s) - return array of actions
@@ -37,7 +38,31 @@ router.get('/:id', (req, res) => {
 })
 
 //* POST new action - return new action
-
+router.post('/', async (req, res) => {
+    const action = req.body;
+    if (!action.project_id || !action.description || !action.notes) {
+        res.status(400).json({
+            message: 'Project ID, action description, and notes are required.'
+        })
+    } else {
+        const findProject = await Projects.get(action.project_id)
+        if (!findProject) {
+            res.status(404).json({
+                message: 'There is no project with that ID.'
+            })
+        } else {
+            try {
+                const newAction = await Actions.insert(action)
+                res.status(201).json(newAction)
+            } catch (err) {
+                res.status(500).json({
+                    message: 'There was an error saving this action to the database.',
+                    err: err.message
+                })
+            }
+        }
+    }
+})
 
 //* PUT update action
 
