@@ -55,7 +55,25 @@ router.get('/:id/actions', (req, res) => {
 })
 
 //* POST new project - return new project
-
+router.post('/', (req, res) => {
+    const newProject = req.body;
+    if (!newProject.name || !newProject.description) {
+        res.status(400).json({
+            message: 'Please provide a name and description of the project.'
+        })
+    } else {
+        Projects.insert(newProject)
+            .then(project => {
+                res.status(201).json(project);
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message: 'There was an error saving this project to the database.',
+                    err: err.message
+                })
+        })
+    }
+})
 
 //* PUT update project
 
