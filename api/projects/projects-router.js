@@ -61,6 +61,25 @@ router.get('/:id/actions', (req, res) => {
 
 
 //* DELETE project
+router.delete('/:id', async (req, res) => {
+    const possibleProject = await Projects.get(req.params.id)
+    if (!possibleProject) {
+        res.status(404).json({
+            message: "There is no project with that ID."
+        })
+    } else {
+        try {
+            const deletedProject = await Projects.remove(possibleProject.id)
+            res.status(200).json(`Project ${possibleProject.id} removed.`)
+        }
+        catch (err) {
+            res.status(500).json({
+                message: "The project could not be removed.",
+                err: err.message
+            })
+        }
+    } 
+})
   
   // do not forget to export the router
   module.exports = router;
