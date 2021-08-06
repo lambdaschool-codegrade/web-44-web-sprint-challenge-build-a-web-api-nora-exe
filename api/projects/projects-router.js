@@ -3,14 +3,22 @@
 const express = require('express');
 const router = express.Router();
 
-// const Action = require('../actions/actions-model');
-// const Project = require('./projects/projects-model');
-
-// const {
-
-// } = require('./projects-middleware');
+const Projects = require('./projects-model');
 
 // endpoints
+//* GET project(s) - return array of projects
+router.get('/', (req, res) => {
+    Projects.get()
+        .then(projects => {
+            res.status(200).json(projects)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "The information could not be retrieved"
+            })
+        })
+})
+
 
 // handle errors
 router.use((err, req, res) => {
