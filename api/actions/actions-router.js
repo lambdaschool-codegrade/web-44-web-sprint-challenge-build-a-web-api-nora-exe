@@ -65,7 +65,30 @@ router.post('/', async (req, res) => {
 })
 
 //* PUT update action
-
+router.put('/:id', async (req, res) => {
+    const possibleAction = await Actions.get(req.params.id)
+    if (!possibleAction) {
+        res.status(404).json({
+            message: 'There is no action with that ID.'
+        })
+    } else {
+        if (!req.body.project_id || !req.body.notes || !req.body.description) {
+            res.status(400).json({
+                message: 'Please a project ID, action description and notes.'
+            })
+        } else {
+            try {
+                const updatedAction = await Actions.update(req.params.id, req.body);
+                res.status(200).json(updatedAction);
+            } catch (err) {
+                res.status(500).json({
+                    message: 'The action information could not be modified.',
+                    err: err.message
+                })
+            }
+        }
+    }
+})
 
 //* DELETE action
 router.delete('/:id', async (req, res) => {
