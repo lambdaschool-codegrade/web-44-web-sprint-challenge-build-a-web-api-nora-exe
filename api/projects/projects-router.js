@@ -63,8 +63,8 @@ router.post('/', (req, res) => {
         })
     } else {
         Projects.insert(newProject)
-            .then(project => {
-                res.status(201).json(project);
+            .then(newProject => {
+                res.status(201).json(newProject);
             })
             .catch(err => {
                 res.status(500).json({
